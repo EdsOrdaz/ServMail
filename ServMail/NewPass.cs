@@ -40,7 +40,7 @@ namespace ServMail
             string letrasmin = "abcdefghijklmnopqrstuvwxyz";
             string letrasmay = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             string numeros = "1234567890";
-            string caracteres = "&$#+*/";
+            string caracteres = "#*";
 
             string password = "";
 

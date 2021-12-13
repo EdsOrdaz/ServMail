@@ -14,8 +14,8 @@ namespace ServMail
 {
     public partial class Form1 : Form
     {
-        private String version = "1.42";
-        private String version_hash = "2d6ee9be3e0f48e29f0d1733b87a1ae1";
+        private String version = "1.43";
+        private String version_hash = "5f6828980041108eb383c6fd52a78876";
         #region SQLIF
         //dat nom
         private String select = "SELECT ltrim(rtrim(nombre)) as nombre, ltrim(rtrim(apepat)) as paterno, ltrim(rtrim(apemat)) as materno,email FROM [Nom2001].[dbo].[nomtrab] where status='A' ORDER BY nombre asc";
