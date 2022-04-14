@@ -14,8 +14,13 @@ namespace ServMail
 {
     public partial class Form1 : Form
     {
-        private String version = "1.43";
-        private String version_hash = "5f6828980041108eb383c6fd52a78876";
+        /*
+         V1.44
+        - Se agrega encriptacion al guardar la contraseña para GetName
+
+        */
+        private String version = "1.44";
+        private String version_hash = "bb0cb2c25a057125c6c35b19b2289fc9";
         #region SQLIF
         //dat nom
         private String select = "SELECT ltrim(rtrim(nombre)) as nombre, ltrim(rtrim(apepat)) as paterno, ltrim(rtrim(apemat)) as materno,email FROM [Nom2001].[dbo].[nomtrab] where status='A' ORDER BY nombre asc";
@@ -186,8 +191,6 @@ namespace ServMail
             
             #endregion
 
-            Console.WriteLine("si pasa por aqui");
-            Console.WriteLine("si pasa por aqui");
             //Cargar usuarios Active Directory
             permiso = AutenticaUsuario(path, dominio + @"\" + usu, pass);
             if (permiso)
@@ -329,6 +332,19 @@ namespace ServMail
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            usu = user.Text;
+            pass = pass2.Text;
+
+            if (cargando.IsBusy != true)
+            {
+                this.FormBorderStyle = FormBorderStyle.None;
+                this.TransparencyKey = Color.Gray;
+                this.BackColor = Color.Gray;
+                this.Size = new Size(210, 213);
+                pictureBox1.BringToFront();
+                pictureBox1.Visible = true;
+                cargando.RunWorkerAsync();
+            }
         }
     }
 }

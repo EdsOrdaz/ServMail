@@ -7,7 +7,9 @@ using System.Data.SqlClient;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Web.Security;
 using System.Windows.Forms;
@@ -136,7 +138,8 @@ namespace ServMail
                     
                     using (SqlConnection conexion2 = new SqlConnection(conexionsqllast))
                     {
-                        String insert = "INSERT INTO GetName VALUES ('" + nombre + "','" + usuario + "','" + correo + "', '" + pass.Text + "', '" + DateTime.Now + "')";
+                        String new_pass = Encriptar(pass.Text);
+                        String insert = "INSERT INTO GetName VALUES ('" + nombre + "','" + usuario + "','" + correo + "', '" + new_pass + "', '" + DateTime.Now + "')";
                         Console.WriteLine(insert);
                         conexion2.Open();
                         SqlCommand comm2 = new SqlCommand(insert, conexion2);
@@ -196,5 +199,37 @@ namespace ServMail
             }
             this.Close();
         }
+
+        public static string Encriptar(String textToEncrypt)
+        {
+            try
+            {
+                //string textToEncrypt = "EdsonOrdaz";
+                string ToReturn = "";
+                string publickey = "12345678";
+                string secretkey = "87654321";
+                byte[] secretkeyByte = { };
+                secretkeyByte = System.Text.Encoding.UTF8.GetBytes(secretkey);
+                byte[] publickeybyte = { };
+                publickeybyte = System.Text.Encoding.UTF8.GetBytes(publickey);
+                MemoryStream ms = null;
+                CryptoStream cs = null;
+                byte[] inputbyteArray = System.Text.Encoding.UTF8.GetBytes(textToEncrypt);
+                using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())
+                {
+                    ms = new MemoryStream();
+                    cs = new CryptoStream(ms, des.CreateEncryptor(publickeybyte, secretkeyByte), CryptoStreamMode.Write);
+                    cs.Write(inputbyteArray, 0, inputbyteArray.Length);
+                    cs.FlushFinalBlock();
+                    ToReturn = Convert.ToBase64String(ms.ToArray());
+                }
+                return ToReturn;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex.InnerException);
+            }
+        }
+
     }
 }
