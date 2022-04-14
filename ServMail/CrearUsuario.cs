@@ -114,7 +114,8 @@ namespace ServMail
                     String user = usuario.Text;
                     Console.WriteLine(correo);
 
-                    String insert = "INSERT INTO GetName VALUES ('" + nombre + "','" + user + "','" + correo + "', '" + pass.Text + "', '" + DateTime.Now + "')";
+                    String new_pass = NewPass.Encriptar(pass.Text);
+                    String insert = "INSERT INTO GetName VALUES ('" + nombre + "','" + user + "','" + correo + "', '" + new_pass + "', '" + DateTime.Now + "')";
                     Console.WriteLine(insert);
                     conexion2.Open();
                     SqlCommand comm2 = new SqlCommand(insert, conexion2);
