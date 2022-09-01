@@ -19,8 +19,8 @@ namespace ServMail
         - Se agrega encriptacion al guardar la contraseña para GetName
 
         */
-        private String version = "1.44";
-        private String version_hash = "bb0cb2c25a057125c6c35b19b2289fc9";
+        private String version = "1.44.1";
+        private String version_hash = "ed84260a17fcf01db432023818664ad5549ff5ae";
         #region SQLIF
         //dat nom
         private String select = "SELECT ltrim(rtrim(nombre)) as nombre, ltrim(rtrim(apepat)) as paterno, ltrim(rtrim(apemat)) as materno,email FROM [Nom2001].[dbo].[nomtrab] where status='A' ORDER BY nombre asc";
